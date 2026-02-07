@@ -10,7 +10,8 @@
 <!-- Three.js r145 -->
 <script src="https://unpkg.com/three@0.145.0/build/three.min.js"></script>
 <script src="https://unpkg.com/three@0.145.0/examples/js/controls/OrbitControls.js"></script>
-
+<script src="https://unpkg.com/three@0.145.0/examples/js/loaders/OBJLoader.js"></script>
+      
 <style>
 html, body {
   margin: 0;
@@ -55,6 +56,32 @@ const h = window.innerHeight;
   renderer.setSize(w, h);
   renderer.setPixelRatio(window.devicePixelRatio);
 
+      const loader = new THREE.OBJLoader();
+      loader.load(
+  "model.obj", // ← 読み込みたいOBJ
+  function (obj) {
+
+    // サイズ調整
+    obj.scale.set(0.3, 0.3, 0.3);
+
+    // 位置（中心に置く）
+    obj.position.set(0, 0, -0.5);
+
+    // ライティング不要ならそのままOK
+    scene.add(obj);
+  },
+  function (xhr) {
+    console.log((xhr.loaded / xhr.total * 100) + "% loaded");
+  },
+  function (error) {
+    console.error("OBJ load error", error);
+  }
+);
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(1, 1, 1);
+scene.add(light);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.5));
   // 360°テクスチャ
   const texture = new THREE.TextureLoader().load("equirectangular_image.jpg");
   const sphereGeo = new THREE.SphereGeometry(1, 32, 24);
@@ -87,6 +114,7 @@ window.addEventListener("DOMContentLoaded", main);
 
 </body>
 </html>
+
 
 
 
