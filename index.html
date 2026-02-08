@@ -77,9 +77,6 @@ gltfLoader.load(
   (gltf) => {
     const model = gltf.scene;
 
-    // サイズ調整（モデルによって変える）
-    model.scale.set(0.3, 0.3, 0.3);
-
     // 球の内側・カメラの少し前に配置
     model.position.set(0, 0, -0.5);
 
@@ -122,6 +119,7 @@ window.addEventListener("DOMContentLoaded", main);
 
 </body>
 </html>
+
 
 
 
